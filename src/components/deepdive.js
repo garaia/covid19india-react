@@ -29,8 +29,6 @@ function DeepDive() {
         // rawDataResponse,
         stateDailyResponse,
       ] = await Promise.all([
-        axios.get('https://api.covid19india.org/data.json'),
-        axios.get('https://api.covid19india.org/raw_data.json'),
         axios.get('https://api.covid19india.org/states_daily.json'),
       ]);
       // setTimeseries(response.data.cases_time_series);
