@@ -1,10 +1,10 @@
-// import AgeChart from './Charts/agechart';
+import AgeChart from './Charts/agechart';
 import AllStatesChart from './Charts/allstates';
-// import DailyConfirmedChart from './Charts/dailyconfirmedchart';
-// import GenderChart from './Charts/genderchart';
-// import GrowthTrendChart from './Charts/growthtrendchart';
-// import NationalityChart from './Charts/nationalitychart';
-// import TotalConfirmedChart from './Charts/totalconfirmedchart';
+import DailyConfirmedChart from './Charts/dailyconfirmedchart';
+import GenderChart from './Charts/genderchart';
+import GrowthTrendChart from './Charts/growthtrendchart';
+import NationalityChart from './Charts/nationalitychart';
+import TotalConfirmedChart from './Charts/totalconfirmedchart';
 
 import axios from 'axios';
 import React, {useState, useEffect} from 'react';
@@ -12,8 +12,8 @@ import {Helmet} from 'react-helmet';
 
 function DeepDive() {
   const [fetched, setFetched] = useState(false);
-  // const [timeseries, setTimeseries] = useState([]);
-  // const [rawData, setRawData] = useState([]);
+  const [timeseries, setTimeseries] = useState([]);
+  const [rawData, setRawData] = useState([]);
   const [statesTimeSeries, setStatesTimeSeries] = useState([]);
 
   useEffect(() => {
@@ -25,15 +25,17 @@ function DeepDive() {
   const getStates = async () => {
     try {
       const [
-        // response,
-        // rawDataResponse,
+        response,
+        rawDataResponse,
         stateDailyResponse,
       ] = await Promise.all([
+        axios.get('https://api.covid19india.org/data.json'),
+        axios.get('https://api.covid19india.org/raw_data.json'),
         axios.get('https://api.covid19india.org/states_daily.json'),
       ]);
-      // setTimeseries(response.data.cases_time_series);
+      setTimeseries(response.data.cases_time_series);
       setStatesTimeSeries(stateDailyResponse.data.states_daily);
-      // setRawData(rawDataResponse.data.raw_data);
+      setRawData(rawDataResponse.data.raw_data);
       setFetched(true);
     } catch (err) {
       console.log(err);
@@ -48,13 +50,13 @@ function DeepDive() {
       </Helmet>
 
       <section className="cards">
-        {/* <div className="card fadeInUp" style={{animationDelay: '0.7s'}}>
+        <div className="card fadeInUp" style={{animationDelay: '0.7s'}}>
           <TotalConfirmedChart title="Total Cases" timeseries={timeseries} />
-        </div> */}
+        </div>
 
-        {/* <div className="card fadeInUp" style={{animationDelay: '0.7s'}}>
+        <div className="card fadeInUp" style={{animationDelay: '0.7s'}}>
           <DailyConfirmedChart title="Daily Cases" timeseries={timeseries} />
-        </div> */}
+        </div>
 
         <div
           className="card card-big fadeInUp"
@@ -66,14 +68,14 @@ function DeepDive() {
           />
         </div>
 
-        {/* <div className="card fadeInUp" style={{animationDelay: '0.7s'}}>
+        <div className="card fadeInUp" style={{animationDelay: '0.7s'}}>
           <GrowthTrendChart
             title="States - Growth Trend"
             data={statesTimeSeries}
           />
-        </div> */}
+        </div>
 
-        {/* <div className="card fadeInUp" style={{animationDelay: '0.7s'}}>
+        <div className="card fadeInUp" style={{animationDelay: '0.7s'}}>
           <GenderChart title="Patient Gender" data={rawData} />
         </div>
 
@@ -83,7 +85,7 @@ function DeepDive() {
 
         <div className="card fadeInUp" style={{animationDelay: '0.7s'}}>
           <NationalityChart title="Patients by  Nationality" data={rawData} />
-        </div> */}
+        </div>
       </section>
     </div>
   );
