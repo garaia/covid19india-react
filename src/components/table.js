@@ -294,7 +294,7 @@ function Table(props) {
             })}
           </tbody>
 
-          <tbody>
+          {/* <tbody>
             {states.length > 1 && props.summary === false && (
               <Row
                 key={0}
@@ -303,7 +303,7 @@ function Table(props) {
                 onHighlightState={props.onHighlightState}
               />
             )}
-          </tbody>
+          </tbody> */}
         </table>
         <h5 className="table-fineprint fadeInUp" style={{animationDelay: '1s'}}>
           {count} States/UTS Affected

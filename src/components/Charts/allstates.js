@@ -32,15 +32,17 @@ function AllStatesChart(props) {
         return;
       }
 
-      if (!statesData.has(key)) {
-        statesData.set(key, []);
+      if (key === 'ml') {
+        if (!statesData.has(key)) {
+          statesData.set(key, []);
+        }
+        const previousValue =
+          statesData.get(key).length > 0
+            ? parseInt(statesData.get(key)[statesData.get(key).length - 1])
+            : 0;
+        const currentValue = data[key] !== '' ? parseInt(data[key]) : 0;
+        statesData.get(key).push(previousValue + currentValue);
       }
-      const previousValue =
-        statesData.get(key).length > 0
-          ? parseInt(statesData.get(key)[statesData.get(key).length - 1])
-          : 0;
-      const currentValue = data[key] !== '' ? parseInt(data[key]) : 0;
-      statesData.get(key).push(previousValue + currentValue);
     });
   });
 

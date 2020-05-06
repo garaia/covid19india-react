@@ -107,13 +107,7 @@ function Row(props) {
         <td style={{fontWeight: 600}}>
           <div className="table__title-wrapper">
             {!props.total && (
-              <span
-                className={`dropdown ${
-                  props.reveal && showDistricts
-                    ? 'rotateRightDown'
-                    : 'rotateDownRight'
-                }`}
-              >
+              <span className={`dropdown rotateRightDown`}>
                 <Icon.ChevronDown />
               </span>
             )}
@@ -185,176 +179,170 @@ function Row(props) {
         </td>
       </tr>
 
-      {showDistricts && (
-        <React.Fragment>
-          <tr
-            className={`spacer`}
-            style={{display: props.reveal && !props.total ? '' : 'none'}}
-          >
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
+      <React.Fragment>
+        <tr
+          className={`spacer`}
+          style={{display: props.reveal && !props.total ? '' : 'none'}}
+        >
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
 
-          <tr className={'state-last-update'}>
-            <td colSpan={3}>
-              <h6
-                title={
-                  isNaN(Date.parse(formatDate(props.state.lastupdatedtime)))
-                    ? ''
-                    : formatDateAbsolute(props.state.lastupdatedtime)
-                }
-              >
-                {isNaN(Date.parse(formatDate(props.state.lastupdatedtime)))
+        <tr className={'state-last-update'}>
+          <td colSpan={3}>
+            <h6
+              title={
+                isNaN(Date.parse(formatDate(props.state.lastupdatedtime)))
                   ? ''
-                  : `Last updated ${formatDistance(
-                      new Date(formatDate(props.state.lastupdatedtime)),
-                      new Date()
-                    )} ago`}
-              </h6>
-              {sortedDistricts?.Unknown && (
-                <div className="disclaimer">
-                  <Icon.AlertCircle />
-                  {`District-wise numbers are under reconciliation`}
-                </div>
-              )}
-            </td>
-            <td className="state-page-link" colSpan={2}>
-              <Link to={`state/${state.statecode}`}>Visit state page</Link>
-            </td>
-          </tr>
+                  : formatDateAbsolute(props.state.lastupdatedtime)
+              }
+            >
+              {isNaN(Date.parse(formatDate(props.state.lastupdatedtime)))
+                ? ''
+                : `Last updated ${formatDistance(
+                    new Date(formatDate(props.state.lastupdatedtime)),
+                    new Date()
+                  )} ago`}
+            </h6>
+            {sortedDistricts?.Unknown && (
+              <div className="disclaimer">
+                <Icon.AlertCircle />
+                {`District-wise numbers are under reconciliation`}
+              </div>
+            )}
+          </td>
+          <td className="state-page-link" colSpan={2}>
+            <Link to={`state/${state.statecode}`}>Visit state page</Link>
+          </td>
+        </tr>
 
-          <tr className={`district-heading`}>
-            <td onClick={(e) => handleSort('district')}>
-              <div className="heading-content">
-                <abbr title="District">District</abbr>
-                <div
-                  style={{
-                    display:
-                      sortData.sortColumn === 'district' ? 'initial' : 'none',
-                  }}
-                >
-                  {sortData.isAscending ? (
-                    <div className="arrow-up" />
-                  ) : (
-                    <div className="arrow-down" />
-                  )}
-                </div>
+        <tr className={`district-heading`}>
+          <td onClick={(e) => handleSort('district')}>
+            <div className="heading-content">
+              <abbr title="District">District</abbr>
+              <div
+                style={{
+                  display:
+                    sortData.sortColumn === 'district' ? 'initial' : 'none',
+                }}
+              >
+                {sortData.isAscending ? (
+                  <div className="arrow-up" />
+                ) : (
+                  <div className="arrow-down" />
+                )}
               </div>
-            </td>
-            <td onClick={(e) => handleSort('confirmed')}>
-              <div className="heading-content">
-                <abbr
-                  className={`${window.innerWidth <= 769 ? 'is-cherry' : ''}`}
-                  title="Confirmed"
-                >
-                  {window.innerWidth <= 769
-                    ? window.innerWidth <= 375
-                      ? 'C'
-                      : 'Cnfmd'
-                    : 'Confirmed'}
-                </abbr>
-                <div
-                  style={{
-                    display:
-                      sortData.sortColumn === 'confirmed' ? 'initial' : 'none',
-                  }}
-                >
-                  {sortData.isAscending ? (
-                    <div className="arrow-up" />
-                  ) : (
-                    <div className="arrow-down" />
-                  )}
-                </div>
+            </div>
+          </td>
+          <td onClick={(e) => handleSort('confirmed')}>
+            <div className="heading-content">
+              <abbr
+                className={`${window.innerWidth <= 769 ? 'is-cherry' : ''}`}
+                title="Confirmed"
+              >
+                {window.innerWidth <= 769
+                  ? window.innerWidth <= 375
+                    ? 'C'
+                    : 'Cnfmd'
+                  : 'Confirmed'}
+              </abbr>
+              <div
+                style={{
+                  display:
+                    sortData.sortColumn === 'confirmed' ? 'initial' : 'none',
+                }}
+              >
+                {sortData.isAscending ? (
+                  <div className="arrow-up" />
+                ) : (
+                  <div className="arrow-down" />
+                )}
               </div>
-            </td>
-            <td onClick={(e) => handleSort('active')}>
-              <div className="heading-content">
-                <abbr
-                  className={`${window.innerWidth <= 769 ? 'is-blue' : ''}`}
-                  title="Active"
-                >
-                  {window.innerWidth <= 769
-                    ? window.innerWidth <= 375
-                      ? 'A'
-                      : 'Actv'
-                    : 'Active'}
-                </abbr>
-                <div
-                  style={{
-                    display:
-                      sortData.sortColumn === 'active' ? 'initial' : 'none',
-                  }}
-                >
-                  {sortData.isAscending ? (
-                    <div className="arrow-up" />
-                  ) : (
-                    <div className="arrow-down" />
-                  )}
-                </div>
+            </div>
+          </td>
+          <td onClick={(e) => handleSort('active')}>
+            <div className="heading-content">
+              <abbr
+                className={`${window.innerWidth <= 769 ? 'is-blue' : ''}`}
+                title="Active"
+              >
+                {window.innerWidth <= 769
+                  ? window.innerWidth <= 375
+                    ? 'A'
+                    : 'Actv'
+                  : 'Active'}
+              </abbr>
+              <div
+                style={{
+                  display:
+                    sortData.sortColumn === 'active' ? 'initial' : 'none',
+                }}
+              >
+                {sortData.isAscending ? (
+                  <div className="arrow-up" />
+                ) : (
+                  <div className="arrow-down" />
+                )}
               </div>
-            </td>
-            <td onClick={(e) => handleSort('recovered')}>
-              <div className="heading-content">
-                <abbr
-                  className={`${window.innerWidth <= 769 ? 'is-green' : ''}`}
-                  title="Recovered"
-                >
-                  {window.innerWidth <= 769
-                    ? window.innerWidth <= 375
-                      ? 'R'
-                      : 'Rcvrd'
-                    : 'Recovered'}
-                </abbr>
-                <div
-                  style={{
-                    display:
-                      sortData.sortColumn === 'recovered'
-                        ? 'sort-black'
-                        : 'none',
-                  }}
-                >
-                  {sortData.isAscending ? (
-                    <div className="arrow-up" />
-                  ) : (
-                    <div className="arrow-down" />
-                  )}
-                </div>
+            </div>
+          </td>
+          <td onClick={(e) => handleSort('recovered')}>
+            <div className="heading-content">
+              <abbr
+                className={`${window.innerWidth <= 769 ? 'is-green' : ''}`}
+                title="Recovered"
+              >
+                {window.innerWidth <= 769
+                  ? window.innerWidth <= 375
+                    ? 'R'
+                    : 'Rcvrd'
+                  : 'Recovered'}
+              </abbr>
+              <div
+                style={{
+                  display:
+                    sortData.sortColumn === 'recovered' ? 'sort-black' : 'none',
+                }}
+              >
+                {sortData.isAscending ? (
+                  <div className="arrow-up" />
+                ) : (
+                  <div className="arrow-down" />
+                )}
               </div>
-            </td>
-            <td onClick={(e) => handleSort('deceased')}>
-              <div className="heading-content">
-                <abbr
-                  className={`${window.innerWidth <= 769 ? 'is-gray' : ''}`}
-                  title="Deaths"
-                >
-                  {window.innerWidth <= 769
-                    ? window.innerWidth <= 375
-                      ? 'D'
-                      : 'Dcsd'
-                    : 'Deceased'}
-                </abbr>
-                <div
-                  style={{
-                    display:
-                      sortData.sortColumn === 'deceased' ? 'initial' : 'none',
-                  }}
-                >
-                  {sortData.isAscending ? (
-                    <div className="arrow-up" />
-                  ) : (
-                    <div className="arrow-down" />
-                  )}
-                </div>
+            </div>
+          </td>
+          <td onClick={(e) => handleSort('deceased')}>
+            <div className="heading-content">
+              <abbr
+                className={`${window.innerWidth <= 769 ? 'is-gray' : ''}`}
+                title="Deaths"
+              >
+                {window.innerWidth <= 769
+                  ? window.innerWidth <= 375
+                    ? 'D'
+                    : 'Dcsd'
+                  : 'Deceased'}
+              </abbr>
+              <div
+                style={{
+                  display:
+                    sortData.sortColumn === 'deceased' ? 'initial' : 'none',
+                }}
+              >
+                {sortData.isAscending ? (
+                  <div className="arrow-up" />
+                ) : (
+                  <div className="arrow-down" />
+                )}
               </div>
-            </td>
-          </tr>
-        </React.Fragment>
-      )}
-
+            </div>
+          </td>
+        </tr>
+      </React.Fragment>
       {sortedDistricts &&
-        showDistricts &&
         Object.keys(sortedDistricts)
           .filter((district) => district.toLowerCase() !== 'unknown')
           .map((district, index) => {
